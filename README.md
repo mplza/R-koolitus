@@ -1,6 +1,6 @@
 # R-koolitus
 
-Iseseisva ülesande sisuks on töö Superstore näidisandmestikuga, mille käigus tuleb leida vastused 4 küsimusele ja koostada 1 joonis.
+Iseseisva ülesande sisuks on töö Superstore näidisandmestikuga (Superstore.xlsx), mille käigus tuleb leida vastused 4 küsimusele ja koostada 1 joonis.
 
 Soovi korral võib koostada tööst rmarkdowni raporti ja laadida see üles RPubsi keskkonda.
 
