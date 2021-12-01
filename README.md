@@ -16,3 +16,6 @@ Soovi korral võib koostada tööst rmarkdowni raporti ja laadida see üles RPub
 4. Mitu tellimust tegid Wisconsini osariigi ärikliendid 2016. aasta septembris?
 
 5. Koosta joonis, mis kujutab tellimuste koguarvu 2017. aastal kuude kaupa kliendisegmentide lõikes.
+
+
+Küsimuste korral palun võtta ühendust: ksdata@vivaldi.net
