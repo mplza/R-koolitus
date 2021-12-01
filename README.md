@@ -18,4 +18,5 @@ Soovi korral võib koostada tööst rmarkdowni raporti ja laadida see üles RPub
 5. Koosta joonis, mis kujutab tellimuste koguarvu 2017. aastal kuude kaupa kliendisegmentide lõikes.
 
 
-Küsimuste korral palun võtta ühendust: ksdata@vivaldi.net
+
+Kui tekib küsimusi või soovite tagasisidet oma töö kohta, siis palun võtta ühendust: ksdata@vivaldi.net
