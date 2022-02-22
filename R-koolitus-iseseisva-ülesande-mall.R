@@ -10,14 +10,14 @@ gapminder %>%
   filter(continent == '...') %>%
   select(...) %>%
   unique() %>%
-  print(n= Inf)
+  print(n = Inf)
 
 # 2. Millistes Euroopa riikides oli 1992.a aastal rahvaarv üle 10 miljoni? Reastage riigid tähestikulises järjekorras.
 gapminder %>%
   filter(continent == '...',
          year == ...,
          pop > ...) %>%
-  arrange(country)
+  arrange(...)
 
 # 3. Mitmes Aafrika riigis oli 1982. aastal oodatav eluiga alla 60?
 gapminder %>%

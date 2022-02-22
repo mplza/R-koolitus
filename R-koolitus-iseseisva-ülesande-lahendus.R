@@ -10,7 +10,7 @@ gapminder %>%
   filter(continent == 'Asia') %>%
   select(country) %>%
   unique() %>%
-  print(n= Inf)
+  print(n = Inf)
 
 # 2. Millistes Euroopa riikides oli 1992.a aastal rahvaarv üle 10 miljoni? Reastage riigid tähestikulises järjekorras.
 gapminder %>%
