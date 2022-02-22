@@ -1,22 +1,18 @@
 # R-koolitus
 
-Iseseisva ülesande sisuks on töö Superstore näidisandmestikuga (Superstore.xlsx), mille käigus tuleb leida vastused 4 küsimusele ja koostada 1 joonis.
-
-Soovi korral võib koostada tööst rmarkdowni raporti ja laadida see üles RPubsi keskkonda.
-
+Iseseisva ülesande sisuks on töö koolituspäevast tuttava Gapminderi andmestikuga, mille käigus tuleb leida vastused 4 küsimusele ja koostada 1 joonis.
 
 Ülesanded:
 
-1. Millised on poe erinevad kliendisegmendid, tootekategooriad ja alamkategooriad?
+1. Leidke unikaalsete Aasia riikide nimed.
 
-2. Mitu erinevat toodet kuulub igasse tootekategooriasse ja alamkategooriasse? Reasta tulemused kategooriate kaupa suuremast väiksemani.
+2. Millistes Euroopa riikides oli 1992.a aastal rahvaarv üle 10 miljoni? Reastage riigid tähestikulises järjekorras.
 
-3. Mis on iga kliendisegmendi kõige enimmüüdud toode?
+3. Mitmes Aafrika riigis oli 1982. aastal oodatav eluiga alla 60?
 
-4. Mitu tellimust tegid Wisconsini osariigi ärikliendid 2016. aasta septembris?
+4. Valige 3 riiki ja leidke iga riigi keskmine rahvaarv, oodatav eluiga ja SKP.
 
-5. Koosta joonis, mis kujutab tellimuste koguarvu 2017. aastal kuude kaupa kliendisegmentide lõikes.
-
+5. Looge eelmise ülesande lahenduse põhjal joonis, mis kujutab valitud riikide keskmist rahvaarvu, oodatavat eluiga või SKP-d. Lisage joonisele kujundused oma soovi järgi, nt värvige tulbad riikide järgi.
 
 
 Kui tekib küsimusi või soovite tagasisidet oma töö kohta, siis palun võtta ühendust: ksdata@vivaldi.net
