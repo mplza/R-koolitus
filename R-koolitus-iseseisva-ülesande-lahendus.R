@@ -26,19 +26,14 @@ gapminder %>%
          lifeExp < 60) %>%
   summarize(n_distinct(country))
 
-# 4. Valige 3 riiki ja leidke iga riigi keskmine rahvaarv, oodatav eluiga ja SKP.
+# 4. Valige üks kontinent ja leidke selle keskmine oodatav eluiga läbi aastate.
 gapminder %>%
-  filter(country %in% c('Belgium', 'Ireland', 'Austria')) %>%
-  group_by(country) %>%
-  summarize(keskmine_rahvaarv = mean(pop),
-            keskmine_oodatav_eluiga = mean(lifeExp),
-            keskmine_SKP = mean(gdpPercap))
+  filter(continent == 'Americas') %>%
+  group_by(continent, year) %>%
+  summarize(keskmine_oodatav_eluiga = mean(lifeExp))
 
-# 5. Looge eelmise ülesande lahenduse põhjal joonis, mis kujutab valitud riikide keskmist rahvaarvu, oodatavat eluiga või SKP-d. Lisage joonisele kujundused oma soovi järgi, nt värvige tulbad riikide järgi.
+# 5. Loogejoonis, mis kujutab valitud riikide rahvaarvu, oodatavat eluiga või SKP-d läbi aastate. Kujundage joonis oma soovi järgi.
 gapminder %>%
   filter(country %in% c('Belgium', 'Ireland', 'Austria')) %>%
-  group_by(country) %>%
-  summarize(keskmine_SKP = mean(gdpPercap)) %>%
-  ggplot(aes(country, keskmine_SKP, fill = country)) +
-  geom_col() +
-  guides(fill = FALSE)
+  ggplot(aes(year, gdpPercap, fill = country)) +
+  geom_col(position = 'dodge') 
