@@ -41,7 +41,7 @@ gapminder %>%
   group_by(continent, year) %>%
   summarize(keskmine_oodatav_eluiga = mean(lifeExp))
 
-# 5. Loogejoonis, mis kujutab valitud riikide rahvaarvu, oodatavat eluiga või SKP-d läbi aastate. Kujundage joonis oma soovi järgi.
+# 5. Looge joonis, mis kujutab valitud riikide rahvaarvu, oodatavat eluiga või SKP-d läbi aastate. Kujundage joonis oma soovi järgi.
 gapminder %>%
   filter(country %in% c('Belgium', 'Ireland', 'Austria')) %>%
   ggplot(aes(year, gdpPercap, fill = country)) +
