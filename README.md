@@ -10,9 +10,9 @@ Iseseisva ülesande sisuks on töö koolituspäevast tuttava Gapminderi andmesti
 
 3. Mitmes Aafrika riigis oli 1982. aastal oodatav eluiga alla 60?
 
-4. Valige 3 riiki ja leidke iga riigi keskmine rahvaarv, oodatav eluiga ja SKP.
+4. Valige üks kontinent ja leidke selle keskmine oodatav eluiga läbi aastate.
 
-5. Looge eelmise ülesande lahenduse põhjal joonis, mis kujutab valitud riikide keskmist rahvaarvu, oodatavat eluiga või SKP-d. Lisage joonisele kujundused oma soovi järgi, nt värvige tulbad riikide järgi.
+5. Looge joonis, mis kujutab kolme vabalt valitud riigi rahvaarvu, oodatavat eluiga või SKP-d läbi aastate. Kujundage joonis oma soovi järgi.
 
 
 Kui tekib küsimusi või soovite tagasisidet oma töö kohta, siis palun võtta ühendust: ksdata@vivaldi.net
