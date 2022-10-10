@@ -1,0 +1,72 @@
+---
+title: "Näidisraport"
+author: "Merilin Paas-Loeza"
+date: "10 10 2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+## Pakettide laadimine
+
+```{r}
+library(tidyverse)
+library(lubridate)
+```
+
+## Andmete importimine
+
+```{r}
+library(readxl)
+andmed <- read_excel("Superstore_clean.xlsx")
+andmed
+```
+
+## Erinevate kliendisegmentide tellimused
+
+```{r}
+andmed %>%
+  mutate(Aasta = year(Order_Date)) %>%
+  group_by(Aasta, Segment) %>%
+  summarise(Tellimused = n_distinct(Order_ID)) %>%
+  ggplot(aes(Aasta, Tellimused, fill = Segment)) +
+  geom_col(position = 'dodge') +
+  labs(x = '',
+       y = 'Tellimuste arv',
+       fill = '')
+```
+
+Kõikide kliendisegmentide tellimuste arvud on iga aasta märgatavalt tõusnud.
+
+## Mida erinevad kliendisegmendid ostavad?
+
+```{r}
+andmed %>%
+  group_by(Segment, Category) %>%
+  summarise(Myydud_yhikud = sum(Quantity)) %>%
+  ggplot(aes(Segment, Myydud_yhikud, fill = Category)) +
+  geom_col(position = 'dodge') +
+  labs(x = '',
+       y = 'Müüdud tooteühikud',
+       fill = '')
+```
+
+Kõik kliendisegmendid ostavad kõige enam kontoritarbeid, kusjuures kõige enam ostavad neid tavakliendid.
+
+## Milliseid kontoritarbeid erinevad kliendisegmendid ostavad?
+
+```{r}
+andmed %>%
+  filter(Category == 'Office Supplies') %>%
+  group_by(Segment, Sub_Category) %>%
+  summarise(Myydud_yhikud = sum(Quantity)) %>%
+  ggplot(aes(Segment, Myydud_yhikud, fill = Sub_Category)) +
+  geom_col(position = 'dodge') +
+  # Värvipaleti muutmine 
+  scale_fill_brewer(palette = 'Set3') +
+  labs(x = '',
+       y = 'Müüdud tooteühikud',
+       fill = '') 
+```
