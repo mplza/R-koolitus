@@ -41,7 +41,7 @@ gapminder %>%
   group_by(..., ...) %>%
   summarize(keskmine_oodatav_eluiga = mean(...))
 
-# 5. Loogejoonis, mis kujutab kolme vabalt valitud riigi rahvaarvu, oodatavat eluiga või SKP-d läbi aastate. Kujundage joonis oma soovi järgi.
+# 5. Looge joonis, mis kujutab kolme vabalt valitud riigi rahvaarvu, oodatavat eluiga või SKP-d läbi aastate. Kujundage joonis oma soovi järgi.
 gapminder %>%
   filter(country %in% c('...', '...', '...')) %>%
   ggplot(aes(..., ..., fill = ...)) +
