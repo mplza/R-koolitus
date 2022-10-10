@@ -41,4 +41,4 @@ gapminder %>%
   summarize(... = mean(...)) %>%
   ggplot(aes(..., ..., fill = ...)) +
   geom_col() +
-  guides(fill = FALSE)
+  theme(legend.position = 'none')
