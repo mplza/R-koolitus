@@ -5,6 +5,15 @@ library(tidyverse)
 library(readxl) 
 gapminder <- read_excel("gapminder.xlsx") 
 
+# Andmestikuga tutvumine
+head(gapminder)
+glimpse(gapminder)
+summary(gapminder)
+
+# Veergude unikaalsed väärtused
+unique(gapminder$continent)
+unique(gapminder$year)
+
 # 1. Leidke unikaalsete Aasia riikide nimed.
 gapminder %>%
   filter(continent == 'Asia') %>%
