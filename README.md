@@ -2,6 +2,8 @@
 
 Iseseisva ülesande sisuks on töö koolituspäevast tuttava Gapminderi andmestikuga, mille käigus tuleb leida vastused 4 küsimusele ja koostada 1 joonis.
 
+Tulemused esitada RMarkdowni raporti vormis, mis tuleb üles laadida rpubs.com keskkonda ning raporti link saata aadressile ksdata@vivaldi.net.
+
 Ülesanded:
 
 1. Leidke unikaalsete Aasia riikide nimed.
