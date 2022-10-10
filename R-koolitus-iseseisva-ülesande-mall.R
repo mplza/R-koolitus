@@ -5,6 +5,15 @@ library(...)
 library(readxl) 
 gapminder <- read_excel("...") 
 
+# Andmestikuga tutvumine
+head(...)
+glimpse(...)
+summary(...)
+
+# Unikaalsed kontinendid ja aastad
+unique(gapminder$...)
+unique(gapminder$...)
+
 # 1. Leidke unikaalsete Aasia riikide nimed.
 gapminder %>%
   filter(continent == '...') %>%
@@ -26,19 +35,14 @@ gapminder %>%
          ... < ...) %>%
   summarize(n_distinct(...))
 
-# 4. Valige 3 riiki ja leidke iga riigi keskmine rahvaarv, oodatav eluiga ja SKP.
+# 4. Valige üks kontinent ja leidke selle keskmine oodatav eluiga läbi aastate.
 gapminder %>%
-  filter(country %in% c('...', '...', '...')) %>%
-  group_by(...) %>%
-  summarize(keskmine_rahvaarv = mean(...),
-            keskmine_oodatav_eluiga = ...(...),
-            keskmine_SKP = ...(...))
+  filter(continent == '...') %>%
+  group_by(..., ...) %>%
+  summarize(keskmine_oodatav_eluiga = mean(...))
 
-# 5. Looge eelmise ülesande lahenduse põhjal joonis, mis kujutab valitud riikide keskmist rahvaarvu, oodatavat eluiga või SKP-d. Lisage joonisele kujundused oma soovi järgi, nt värvige tulbad riikide järgi.
+# 5. Loogejoonis, mis kujutab kolme vabalt valitud riigi rahvaarvu, oodatavat eluiga või SKP-d läbi aastate. Kujundage joonis oma soovi järgi.
 gapminder %>%
   filter(country %in% c('...', '...', '...')) %>%
-  group_by(...) %>%
-  summarize(... = mean(...)) %>%
   ggplot(aes(..., ..., fill = ...)) +
-  geom_col() +
-  theme(legend.position = 'none')
+  geom_col(position = '...') 
