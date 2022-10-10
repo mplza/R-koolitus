@@ -582,7 +582,7 @@ tellimused2
 # Kasutades andmestikku `tellimused`: Leidke tellimused, mille täitmiseni kulus 7 või rohkem päeva.**
 
 tellimused %>%
-  mutate(Aeg_tellimuse_täitmiseni = ...)) %>%
+  mutate(Aeg_tellimuse_täitmiseni = ...) %>%
   filter(... >= ...)
 
 
