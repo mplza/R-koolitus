@@ -1,6 +1,6 @@
 # R-koolitus
 
-Iseseisva ülesande sisuks on töö koolituspäevast tuttava Gapminderi andmestikuga, mille käigus tuleb leida vastused 4 küsimusele ja koostada 1 joonis.
+Iseseisva ülesande sisuks on töö Gapminderi andmestikuga (https://github.com/mplza/R-koolitus/blob/main/gapminder.xlsx), mille käigus tuleb leida vastused 4 küsimusele ja koostada 1 joonis.
 
 Tulemused esitada RMarkdowni raporti vormis, mis tuleb üles laadida rpubs.com keskkonda ning raporti link saata aadressile ksdata@vivaldi.net.
 
