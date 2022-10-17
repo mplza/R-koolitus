@@ -18,3 +18,6 @@ Tulemused esitada RMarkdowni raporti vormis, mis tuleb üles laadida rpubs.com k
 
 
 Kui tekib küsimusi või soovite tagasisidet oma töö kohta, siis palun võtta ühendust: ksdata@vivaldi.net
+
+Näidisraporti Rmd skript: https://github.com/mplza/R-koolitus/blob/main/n%C3%A4idisraport.Rmd
+Näidisraport RPubs keskkonnas: https://rpubs.com/r-koolitus/957384
