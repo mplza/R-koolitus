@@ -4,6 +4,8 @@ NB! Kui vaatate koolituse lindistust üle, siis palun laadige Superstore_clean.x
 
 Iseseisva ülesande sisuks on töö Gapminderi andmestikuga (https://github.com/mplza/R-koolitus/blob/main/gapminder.xlsx), mille käigus tuleb leida vastused 4 küsimusele ja koostada 1 joonis.
 
+Ülesannete malli, kus tuleb lihtsalt lüngad täita õigete väärtustega leiate ülevalt. Ühtlasi on üleval olemas lahendused.
+
 Tulemused esitada RMarkdowni raporti vormis, mis tuleb üles laadida rpubs.com keskkonda ning raporti link saata aadressile ksdata@vivaldi.net.
 
 Ülesanded:
@@ -19,7 +21,6 @@ Tulemused esitada RMarkdowni raporti vormis, mis tuleb üles laadida rpubs.com k
 5. Looge joonis, mis kujutab kolme vabalt valitud riigi rahvaarvu, oodatavat eluiga või SKP-d läbi aastate. Kujundage joonis oma soovi järgi.
 
 Alternatiiv: Looge RMarkdowni raport omale meelepärases formaadis, mis vastab mõnele huvitavale küsimusele Superstore_clean.xlsx andmestikus.
-
 
 Kui tekib küsimusi või soovite tagasisidet oma töö kohta, siis palun võtta ühendust: ksdata@vivaldi.net
 
