@@ -33,3 +33,6 @@ Kliendid: https://github.com/mplza/R-koolitus/blob/main/kliendid.xlsx
 Tellimused: https://github.com/mplza/R-koolitus/blob/main/tellimused.xlsx
 Tooted: https://github.com/mplza/R-koolitus/blob/main/tooted.xlsx
 
+Laadige alla Edasijõudnute iseseisev ülesanne, mis sisaldab edasisi juhiseid.
+
+Looge tulemustest RMarkdowni raport. Saatke dokumendi rpubs.com link või PDF dokument aadressile ksdata@vivaldi.net.
