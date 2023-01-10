@@ -1,12 +1,10 @@
 # R-koolitus
 
-NB! Kui vaatate koolituse lindistust üle, siis palun laadige Superstore_clean.xlsx andmestik uuesti alla, sest selles oli enne viga, mis on nüüdseks parandatud!
+## Algajate iseseisev ülesanne
 
-Iseseisva ülesande sisuks on töö Gapminderi andmestikuga (https://github.com/mplza/R-koolitus/blob/main/gapminder.xlsx), mille käigus tuleb leida vastused 4 küsimusele ja koostada 1 joonis.
+Iseseisva ülesande sisuks on töö Gapminderi andmestikuga (https://github.com/mplza/R-koolitus/blob/main/gapminder.xlsx), mille käigus tuleb leida vastused 4 küsimusele ja koostada 1 joonis. Ülesande malli leiate siit: https://github.com/mplza/R-koolitus/blob/main/R-koolitus-iseseisva-%C3%BClesande-mall.R
 
-Ülesannete malli, kus tuleb lihtsalt lüngad täita õigete väärtustega leiate ülevalt. Ühtlasi on üleval olemas lahendused.
-
-Tulemused esitada RMarkdowni raporti vormis, mis tuleb üles laadida rpubs.com keskkonda ning raporti link saata aadressile ksdata@vivaldi.net.
+Tulemused esitada RMarkdowni raporti vormis. Saatke dokumendi rpubs.com link või PDF dokument aadressile ksdata@vivaldi.net.
 
 Ülesanded:
 
@@ -26,3 +24,6 @@ Kui tekib küsimusi või soovite tagasisidet oma töö kohta, siis palun võtta 
 
 Näidisraporti Rmd skript: https://github.com/mplza/R-koolitus/blob/main/n%C3%A4idisraport.Rmd
 Näidisraport RPubs keskkonnas: https://rpubs.com/r-koolitus/957384
+
+## Edasijõudnute iseseisev ülesanne
+
