@@ -27,3 +27,9 @@ Näidisraport RPubs keskkonnas: https://rpubs.com/r-koolitus/957384
 
 ## Edasijõudnute iseseisev ülesanne
 
+Iseseisva ülesande sisuks on töö kolme erineva andmestikuga:
+
+Kliendid: https://github.com/mplza/R-koolitus/blob/main/kliendid.xlsx
+Tellimused: https://github.com/mplza/R-koolitus/blob/main/tellimused.xlsx
+Tooted: https://github.com/mplza/R-koolitus/blob/main/tooted.xlsx
+
