@@ -1,0 +1,152 @@
+---
+title: "Edasijõudnute iseseisev ülesanne: lahendus"
+author: "Minu nimi"
+date: "8 10 2022"
+output: pdf_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, error = FALSE)
+```
+
+Iseseisva töö sisuks on töö kolme andmestikuga, mis on vaja puhastada, omavahel ühendada ning leida küsimused kolmele vabalt valitud küsimusele.
+
+-   Kliendid: <https://github.com/mplza/R-koolitus/blob/main/kliendid.xlsx>
+
+-   Tellimused: <https://github.com/mplza/R-koolitus/blob/main/tellimused.xlsx>
+
+-   Tooted: <https://github.com/mplza/R-koolitus/blob/main/tooted.xlsx>
+
+# Andmete laadimine
+
+```{r}
+library(tidyverse)
+
+library(readxl)
+kliendid <- read_excel("~/R/R koolitus edasijõudnud/kliendid.xlsx")
+tellimused <- read_excel("~/R/R koolitus edasijõudnud/tellimused.xlsx")
+tooted <- read_excel("~/R/R koolitus edasijõudnud/tooted.xlsx")
+```
+
+# Andmetega tutvumine
+
+## Kliendid
+
+```{r}
+head(kliendid) 
+
+kliendid %>%
+  mutate_if(is.character, as.factor) %>%
+  summary()
+```
+
+## Tellimused
+
+```{r}
+head(tellimused) 
+
+tellimused %>%
+  mutate_if(is.character, as.factor) %>%
+  summary()
+```
+
+## Tooted
+
+```{r}
+head(tooted)
+
+tooted %>%
+  mutate_if(is.character, as.factor) %>%
+  summary()
+```
+
+# Andmete puhastamine
+
+## Tellimused
+
+1.  Muutke ära veergude nimed, et mitte ükski neist ei sisaldaks tühikuid.
+
+2.  Salvestage tulemus uueks andmestikuks `tellimused1`.
+
+```{r}
+tellimused1 <- tellimused %>%
+  rename(Order_ID = `Order ID`,
+         Order_Date = `Order Date`,
+         Ship_Date = `Ship Date`,
+         Customer_ID = `Customer ID`,
+         Product_ID = `Product ID`)
+
+tellimused1
+```
+
+## Kliendid
+
+1.  Muutke ära veergude nimed, et mitte ükski neist ei sisaldaks tühikuid.
+
+2.  Muutke segmendi veergu, et kõik sõnad algaksid suurte algustähtedega.
+
+3.  Viige andmestik korrastatud kujule, et ühe kliendi kõik andmed on ühel real.
+
+4.  Salvestage tulemus uueks andmestikuks `kliendid1`.
+
+```{r}
+kliendid1 <- kliendid %>%
+  rename(Customer_ID = `Customer ID`,
+         Customer_Name = `Customer Name`) %>%
+  mutate(Segment = str_to_title(Segment)) %>%
+  pivot_wider(names_from = 'Location_type', values_from = 'Location_name')
+
+kliendid1
+```
+
+## Tooted
+
+1.  Muutke ära veergude nimed, et mitte ükski neist ei sisaldaks tühikuid.
+
+2.  Eraldage veerg "Category" kaheks eraldi veeruks: "Category" ja "Sub-Category".
+
+3.  Salvestage tulemus uueks andmestikuks `tooted1`.
+
+```{r}
+tooted1 <- tooted %>%
+  rename(Product_ID = `Product ID`,
+         Product_Name = `Product Name`) %>%
+  separate(Category, c('Category', 'Sub_Category'), sep = '_')
+
+tooted1
+```
+
+# Andmestike ühendamine
+
+1.  Ühendage andmestikud omavahel järgmises järjekorras: tellimused, tooted, kliendid.
+
+2.  Salvestage tulemus uueks andmestikuks `andmed`.
+
+```{r}
+andmed <- left_join(tellimused1, tooted1, by = 'Product_ID') %>%
+  left_join(kliendid1, by = 'Customer_ID')
+```
+
+# Küsimused
+
+Esitage järgnevalt 3 küsimust, millele andmestikust vastused leida.
+
+## 1:
+
+```{r}
+
+```
+
+## 2:
+
+```{r}
+
+```
+
+## 3:
+
+```{r}
+
+```
