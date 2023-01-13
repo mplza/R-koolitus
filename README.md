@@ -2,20 +2,13 @@
 
 ## Algajate iseseisev ülesanne
 
-Iseseisva ülesande sisuks on töö Gapminderi andmestikuga ning raporti koostamine.
+Iseseisva ülesande sisuks on töö Gapminderi andmestikuga.
 
 Laadige esmalt alla andmestik: https://github.com/mplza/R-koolitus/blob/main/gapminder.xlsx
 
-RMarkdowni raporti malli koos edasiste juhistega leiate siit: https://github.com/mplza/R-koolitus/blob/main/R-koolitus-iseseisva-%C3%BClesande-mall.R
+R-i skripti koos juhistega leiate siit: https://github.com/mplza/R-koolitus/blob/main/R-koolitus-iseseisva-%C3%BClesande-mall.R
 
-Saatke dokumendi rpubs.com link või PDF dokument aadressile ksdata@vivaldi.net.
-
-Alternatiivina võite valida mõne muu andmestiku järgnevast loetelust, neid uurida ja mõelda välja 3 küsimust või ülesannet, mille põhjal raport luua.
-https://github.com/mplza/R-koolitus/blob/main/gapminder.xlsx
-https://github.com/mplza/R-koolitus/blob/main/flights.xlsx
-https://github.com/mplza/R-koolitus/blob/main/Superstore_clean.xlsx
-
-Näidisraport RPubs keskkonnas: https://rpubs.com/r-koolitus/957384
+Saatke oma R-i skript koos lahendusega aadressile ksdata@vivaldi.net.
 
 
 ## Edasijõudnute iseseisev ülesanne
