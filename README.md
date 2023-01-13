@@ -18,7 +18,9 @@ Iseseisva ülesande sisuks on töö kolme erineva andmestikuga ning raporti koos
 Laadige esmalt alla andmestikud:
 
 Kliendid: https://github.com/mplza/R-koolitus/blob/main/kliendid.xlsx
+
 Tellimused: https://github.com/mplza/R-koolitus/blob/main/tellimused.xlsx
+
 Tooted: https://github.com/mplza/R-koolitus/blob/main/tooted.xlsx
 
 RMarkdowni raporti malli koos edasiste juhistega leiate siit: https://github.com/mplza/R-koolitus/blob/main/Edasij%C3%B5udnute%20iseseisev%20%C3%BClesanne
