@@ -127,6 +127,8 @@ tooted1
 ```{r}
 andmed <- left_join(tellimused1, tooted1, by = 'Product_ID') %>%
   left_join(kliendid1, by = 'Customer_ID')
+  
+andmed
 ```
 
 # Küsimused
