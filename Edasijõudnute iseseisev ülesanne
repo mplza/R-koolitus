@@ -127,6 +127,8 @@ tooted1
 ```{r}
 andmed <- left_join(..., ..., by = ...) %>%
   left_join(..., by = ...)
+  
+andmed
 ```
 
 # Küsimused
