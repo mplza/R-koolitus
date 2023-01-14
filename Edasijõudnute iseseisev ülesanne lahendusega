@@ -25,9 +25,9 @@ Iseseisva töö sisuks on töö kolme andmestikuga, mis on vaja puhastada, omava
 library(tidyverse)
 
 library(readxl)
-kliendid <- read_excel("~/R/R koolitus edasijõudnud/kliendid.xlsx")
-tellimused <- read_excel("~/R/R koolitus edasijõudnud/tellimused.xlsx")
-tooted <- read_excel("~/R/R koolitus edasijõudnud/tooted.xlsx")
+kliendid <- read_excel("kliendid.xlsx")
+tellimused <- read_excel("tellimused.xlsx")
+tooted <- read_excel("tooted.xlsx")
 ```
 
 # Andmetega tutvumine
