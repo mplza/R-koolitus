@@ -1,27 +1,35 @@
 # EDASIJÕUDNUTE TÖÖLEHT
 
 
-# Pakettide laadimine
+
+# TIDYVERSE
 #install.packages('tidyverse') # installi vajadusel
 library(tidyverse) # lae töölauale
 
+
+
+# KOOLITUSPÄEVA ANDMESTIK
 
 # Gapminderi andmestiku laadimine töölauale ja uuel vahelehel avamine
 library(readxl)
 gapminder <- read_excel("gapminder.xlsx")
 View(gapminder)
 
-
-# Andmetega tutvumine
+# Andmestikuga tutvumine
 head(gapminder)
 summary(gapminder)
+glimpse(gapminder)
 
 gapminder %>%
   mutate_if(is.character, as.factor) %>% # muuda sõned faktoriteks
   summary()
 
 
+
 # TOIMINGUD VEERGUDEGA
+
+
+## Veergude ümbernimetamine
 
 # Nimetamine veerud ümber: eestikeelsed pealkirjad
 gapminder_ee <- gapminder %>%
@@ -31,94 +39,105 @@ gapminder_ee <- gapminder %>%
          Oodatav_eluiga = 'lifeExp',
          Rahvaarv = 'pop',
          SKP = 'gdpPercap')
+
+# Vaatame tulemust
 gapminder_ee
 
-# Veergude liitmine
+
+## Veergude liitmine ja lahutamine
+
+# Ühendame kontinendi ja aasta veerud üheks veeruks
 gapminder_unite <- gapminder_ee %>%
   unite(Kontinent_Aasta, c('Kontinent', 'Aasta'), sep = '_')
+
 gapminder_unite
 
-# Veergude lahutamine
+# Eraldame Kontinent_Aasta veerud kaheks eraldi veeruks
 gapminder_separate <- gapminder_unite %>%
   separate(Kontinent_Aasta, c('Kontinent', 'Aasta'), sep = '_')
+
 gapminder_separate
+
 
 
 # PUUDUVAD ANDMED
 
-# Loome näidisandmestiku, kus on puuduvaid andmeid
+
+# Kommide andmestiku loomine
 kommid <- tibble(
-  toode = c('Karakum', 'Oravake', 'Tiina', 'Lily', 'Kaseke', 'Mesikäpp batoonike', 'Barbarissimaitseline karamell'),
-  kategooria = c('Pralineekommid', 'Pralineekommid', 'Marmelaadikommid', NA, 'Batoonikesed', 'Batoonikesed', 'Karamellid'),
-  myydud_yhikud = c(NA, 56, 93, 26, NA, 43, 82),
-  kaal_grammides = c(175, 175, 175, NA, 150, NA, 120),
-  hind = c(2.59, NA, 2.19, NA, 1.89, 1.89, 0.79)
-  )
+  toode = c('Karakum', 'Drako chewy', 'Mesikäpp batoonike', 'Tiina', 'Oravake', 'Kaseke', 'Lily', 'Barbarissimaitseline karamell'),
+  kategooria = c('Pralineekommid', 'Kummi- ja närimiskommid', 'Batoonikesed', 'Marmelaadikommid',  'Pralineekommid', 'Batoonikesed', NA, 'Karamellid'),
+  myydud_yhikud = c(NA, 64, 43, 93, 56, NA, 26, 82),
+  kaal_grammides = c(175, 110, NA, 175, NA, 150, NA, 120)
+)
+
 kommid
 
-# Kas nii saab arvutada?
+# Veeru keskmine väärtus
 mean(kommid$kaal_grammides)
+
+# Veeru keskmine väärtus, puuduvaid andmeid ei arvesta
 mean(kommid$kaal_grammides, na.rm = TRUE)
 
-# Puuduvate andmete leidmine
+
+# Millistes veergudes esineb puuduvaid andmed?
 kommid %>%
   mutate_if(is.character, as.factor) %>% # muuda sõned faktoriteks
   summary()
 
+# Millistes ridades on kategooria veerus andmeid puudu?
 kommid %>%
   filter(is.na(kategooria))
 
-# Puuduvate andmete eemaldamine: kõik read
-kommid %>%
-  drop_na() 
 
-# Puuduvate andmete eemaldamine: üks veerg
+## Puuduvate andmete eemaldamine
+
+# Eemalda andmestikust kõik puuduvate andmetega read
+kommid %>%
+  drop_na()
+
+# Eemalda andmestikust kõik read, kus kategooria on puudu
 kommid %>%
   filter(!is.na(kategooria)) 
 
 
-# Puuduvate andmete asendamine
+## Puuduvate andmete asendamine
+
+
+### Asendamine kindla väärtusega
 
 # Asenda veeru kõik puuduvad väärtused uue väärtusega
 kommid1 <- kommid %>%
   mutate(kategooria = replace_na(kategooria, 'Marmelaadikommid'))
-kommid1
 
 # Asenda veeru kõik puuduvad andmed nullidega
 kommid2 <- kommid1 %>%
   mutate(myydud_yhikud = replace_na(myydud_yhikud, 0))
-kommid2
 
-# Andmete tuletamine
-# Asenda veeru kõik puuduvad väärtused grupi keskmisega
+
+### Andmete tuletamine
+
+# Asenda veeru puuduvad väärtused veeru keskmise väärtusega
 kommid2 %>%
   #group_by(kategooria) %>% # iga grupi kohta
   mutate(kaal_grammides1 = replace_na(kaal_grammides, mean(kaal_grammides, na.rm = TRUE)))
 
 # Asenda puuduvad andmed eelmise teadaolevaga
 kommid2 %>%
-  fill(kaal_grammides, .direction = 'down')
+  select(toode, kategooria, kaal_grammides) %>%
+  mutate(kaal_grammides_uus1 = kaal_grammides, # kopeerimine kaalu veergu 2x
+         kaal_grammides_uus2 = kaal_grammides) %>%
+  #group_by(kategooria) %>% # kategooriate kaupa
+  fill(kaal_grammides_uus1, .direction = 'down') %>% # asenda eelmise teadaolevaga
+  fill(kaal_grammides_uus2, .direction = 'up') # asenda järgmise teadaolevaga
 
-# Asenda puuduvad andmed järgmise teadaolevaga
-kommid2 %>%
-  fill(kaal_grammides, .direction = 'up')
-
-#Kuidas asendaksite puuduvad andmed hinna veerus?
-kommid3 %>%
-  ...
-
-
-# Andmete asendamine tingimuste alusel
-
-# Kui kategooria on Marmelaadikommid, olgu kaal_grammides 175
-# Kui kategooria on Batoonikesed, olgu kaal_grammides 150
-# Muul juhul kaal_grammides algne väärtus
-kommid2 %>%
+kommid3 <- kommid2 %>%
   mutate(kaal_grammides1 = case_when(
-    kategooria == 'Marmelaadikommid' ~ 175,
-    kategooria == 'Batoonikesed' ~ 150,
-    TRUE ~ kaal_grammides)
-  )
+    kategooria %in% c('Marmelaadikommid', 'Pralineekommid') ~ 175, # tingimus 1
+    kategooria == 'Batoonikesed' ~ 150, # tingimus 2
+    TRUE ~ kaal_grammides) # kõik muud juhud
+  ) 
+
 
 
 # ANDMESTIKU KUJU MUUTMINE
@@ -129,47 +148,53 @@ table3 # ??
 table4a
 table4b
 
-# Ülesanne: Milline/millised nendest näidetest on korrastatud, milline/millised mitte?
-  
-# Pikast laiaks
+# laiaks
+table2
+
 table2 %>%
   pivot_wider(names_from = 'type', values_from = 'count')
 
-# Laiast pikaks
+# pikaks
+table1
+
 table1 %>%
   pivot_longer(c('cases', 'population'), names_to = 'type', values_to = 'count')
+   
 
-# Ülesanne: Kuidas viia table3, table4a ja table4b korrastatud kujule?
-  
-# table3
-table3_tidy <- table3 %>%
-  separate(rate, c('cases', 'population'), sep = '/')
-table3_tidy
-
-# table4a: viime pikale kujule ja salvestame uueks andmestikuks table4a_tidy
+# Ülesanne: Kuidas viia table4a ja table4b pikale kujule?
+     
+# table4a
+table4a
+   
 table4a_tidy <- table4a %>%
   pivot_longer(c('1999', '2000'), names_to = 'year', values_to = 'cases')
+
 table4a_tidy
 
-# table4b: viime pikale kujule ja salvestame uueks andmestikuks table4b_tidy
+# table4b
+table4b
+   
 table4b_tidy <- table4b %>%
   pivot_longer(c('1999', '2000'), names_to = 'year', values_to = 'population')
+   
 table4b_tidy
 
 
+
 # DPLYR EDASIJÕUDNUTELE
+   
 
-# Andmestike kombineerimine
-
-# Näidisandmestike loomine
+## Andmestike kombineerimine
+  
+# Loome näidisandmestikud: kontoritooted, pagaritooted & hinnad
 kontoritooted <- tibble(Tootekood = c(5, 10, 15, 20), 
                         Toote_nimi = c('Kaustik', 'Pastakas', 'Kalkulaator', 'Marker'),
                         Suurus = c('Suur', 'Väike', 'Keskmine', 'Mega')) 
-
+   
 pagaritooted <- tibble(Tootekood = c(25, 30, 35, 40), 
                        Toote_nimi = c('Vormileib', 'Sai', 'Sepik', 'Seemneleib'), 
                        Suurus = c('Mega', 'Väike', 'Keskmine', 'Suur')) 
-
+   
 hinnad <- tibble(Tootekood = c(10, 15, 20, 25), 
                  Hind = c(3, 2, 10, 5), 
                  Valuuta = c('euro', 'euro', 'euro', 'euro'))
@@ -178,20 +203,18 @@ kontoritooted
 pagaritooted 
 hinnad
 
-
-# Bind meetodid
-
+   
+### Bind meetodid
+   
 # Kaks tabelit horisontaalselt kokku 
 bind_rows(kontoritooted, pagaritooted) 
 
 # Kaks tabelit vertikaalselt kokku 
 bind_cols(kontoritooted, hinnad)
 
-# Milline probleem siin tekib?
-  
-
-# Join meetodid
-  
+   
+### Join meetodid
+     
 # left_join() 
 kõik_tooted <- left_join(kontoritooted, hinnad, by = 'Tootekood') 
 kõik_tooted
@@ -205,100 +228,59 @@ inner_join(kontoritooted, hinnad, by = 'Tootekood')
 # full_join() 
 full_join(kontoritooted, hinnad, by = 'Tootekood')
 
+
 # Ülesanne: Kuidas ühendada omavahel andmestikud table4a_tidy ja table4b_tidy?
 left_join(table4a_tidy, table4b_tidy, by = c('country', 'year'))
+ 
+   
+## Vektoriseeritud funktsioonid
+   
 
-
-# Vektoriseeritud funktsioonid
-
-
-# lag()
-
+### Eelnev ja järgnev väärtus
+   
 # Argentina rahvaarv eelmisel vaatlusaastal
 gapminder_ee %>%
   filter(Riik == 'Argentina') %>%
   select(Riik, Aasta, Rahvaarv) %>%
-  mutate(Rahvaarv_eelmisel_aastal = lag(Rahvaarv, 1))
-
-# Argentina rahvaarvu muutus vaatlusaastatel
-gapminder_ee %>%
-  filter(Riik == 'Argentina') %>%
-  select(Riik, Aasta, Rahvaarv) %>%
-  mutate(Rahvaarv_eelmisel_aastal = lag(Rahvaarv, 1),
-         Rahvaarvu_muutus = Rahvaarv - Rahvaarv_eelmisel_aastal,
-         Muutus_protsentides = Rahvaarvu_muutus / Rahvaarv_eelmisel_aastal * 100)
+  mutate(Rahvaarv_eelneval_aastal = lag(Rahvaarv, 1),
+         Rahvaarv_järgneval_aastal = lead(Rahvaarv, 1),
+         Muutus_protsentides = (Rahvaarv - lag(Rahvaarv, 1)) / lag(Rahvaarv, 1) * 100)
 
 
-# lead()
-
-# Soome SKP järgmisel vaatlusaastal
-gapminder_ee %>%
-  filter(Riik == 'Finland') %>%
-  select(Riik, Aasta, SKP) %>%
-  mutate(SKP_järgneval_aastal = lead(SKP, 1))
-
-
-# cummin(), cummax(), cummean(), cumsum()
-
-# Kumulatiivne kõige madalam ja kõige kõrgem oodatav eluiga
-gapminder_ee %>%
-  filter(Kontinent == 'Oceania') %>%
-  select(Aasta, Riik, Oodatav_eluiga) %>%
-  arrange(Aasta) %>%
-  #group_by(Aasta) %>%
-  mutate(Kum_madalaim_eluiga = cummin(Oodatav_eluiga),
-         Kum_kõrgeim_eluiga = cummax(Oodatav_eluiga))
-
-# Kanada kumulatiivne keskmine oodatav eluiga
+### Kumulatiivsed väärtused
+   
+# Kanada kumulatiivne min, max ja keskmine oodatav eluiga
 gapminder_ee %>%
   filter(Riik == 'Canada') %>%
-  mutate(Kum_keskmine_eluiga = cummean(Oodatav_eluiga)) 
-
-# Egiptuse kumulatiivne SKP summa
-gapminder_ee %>%
-  filter(Riik == 'Egypt') %>%
-  mutate(Kum_SKP_summa = cumsum(SKP)) 
+  mutate(Kum_madalaim_eluiga = cummin(Oodatav_eluiga),
+         Kum_kõrgeim_eluiga = cummax(Oodatav_eluiga),
+         Kum_keskmine_eluiga = cummean(Oodatav_eluiga)) 
 
 
-# row_number()
-
+### Nummerdamine
+   
 # Rea numbrite lisamine
 gapminder_ee %>%
   mutate(Rea_nr = row_number())
 
-
-# dense_rank()
-
 # Reastamine mingi väärtuse alusel, vaikimisi tõusvas järjekorras
-# Langeva järjekorra jaoks: dense_rank(-Rahvaarv)
+# Miinus ette = langevas järjekorras
 gapminder_ee %>%
-  mutate(Rank = dense_rank(Rahvaarv)) %>% 
-  arrange(Rank)
+  filter(Aasta == 2002) %>%
+  mutate(Rank = dense_rank(-Rahvaarv)) %>% 
+  arrange(Rank) 
 
-
-# ntile()
-
-# Väärtused jagatakse teatud arvu rühmadesse sarnaselt histogrammile
-# Nt 10 (detsiilid), 4 (kvartiilid)
-gapminder_ee %>%
-  select(Aasta, Riik, SKP) %>%
-  filter(Aasta == 2007) %>%
-  mutate(Detsiil = ntile(SKP, 10)) %>%
-  arrange(-Detsiil)
-
-# Detsiilide statistika 
+   
+### Kvantiilid ja protsentiilid
+   
+# Väärtused jagatakse kvantiilidesse: nt 10 (detsiilid), 4 (kvartiilid)
 gapminder_ee %>%
   select(Aasta, Riik, SKP) %>%
   filter(Aasta == 2007) %>%
   mutate(Detsiil = ntile(SKP, 10)) %>%
-  group_by(Detsiil) %>%
-  summarize(keskmine_SKP = mean(SKP),
-            riikide_arv = n_distinct(Riik))
+  arrange(Riik)
 
-
-# percent_rank()
-
-# SKP on kõrgem/madalam kui n% kõikidest teistest
+# SKP on kõrgem/madalam kui mingi % kõikidest teistest riikidest
 gapminder_ee %>%
   select(Aasta, Riik, SKP) %>%
   filter(Aasta == 2007) %>%
@@ -306,18 +288,20 @@ gapminder_ee %>%
   arrange(-Protsentiil)
 
 
-# Summaarsed funktsioonid
 
+## Summaarsed funktsioonid
+   
 
-# n(), n_distinct()
+### Vaatluste loendamine
 
 # Vaatluste ja riikide arv andmestikus
+
 gapminder_ee %>%
   summarize(Vaatluste_arv = n(),
             Riikide_arv = n_distinct(Riik))
 
 
-# sum(), mean(), median(), min(), max()
+### Kokkuvõtlik statistika
 
 # Saksamaa kokkuvõtlik statistika
 gapminder_ee %>%
@@ -329,83 +313,64 @@ gapminder_ee %>%
             Rahvaarv_max = max(Rahvaarv))
 
 
-# first(), last()
-
+### Väärtused positsiooni järgi
+   
 # Kõige kõrgema ja madalama rahvaarvuga riik 2007. aastal
 gapminder_ee %>%
-  filter(Aasta == 2007) %>%
-  arrange(-Rahvaarv) %>% # langevas järjekorras
-  summarize(Kõrgeim_rahvaarv = first(Riik),
-            Madalaim_rahvaarv = last(Riik))
+    filter(Aasta == 2007) %>%
+    arrange(-Rahvaarv) %>% # langevas järjekorras
+    summarize(Kõrgeim_rahvaarv = first(Riik),
+              Madalaim_rahvaarv = last(Riik))
 
-
-# nth()
-
-# Millised riigid on mitmendal kohal SKP järgi
+# Millised riigid on mitmendal kohal oodatava eluea järgi
 gapminder_ee %>%
   filter(Aasta == 2007,
          Kontinent == 'Europe') %>%
-  arrange(-SKP) %>%
+  arrange(-Oodatav_eluiga) %>%
   summarize(Esimene = nth(Riik, 1),
             Kolmas = nth(Riik, 3),
             Viies = nth(Riik, 5),
             Kümnes = nth(Riik, 10))
+   
 
 
 
 # TEKSTILISTE ANDMETE TÖÖTLEMINE
-
+   
 # Andmestiku 10 esimest riiki
 riigid <- gapminder_ee %>%
-  select(Riik, Kontinent) %>%
+  select(Riik, Kontinent) %>% 
+  filter(Kontinent == 'Europe') %>%
   distinct() %>%
-  tail(10)
-riigid
+  head(10)
+   
 
-
-# str_to_lower()
-
+## Suur- ja väiketähed
+   
 # Kõik väiketähed
 riigid %>%
-  mutate(Riik3 = str_to_lower(Riik))
-
-
-# str_to_upper()
+  mutate(Riik1 = str_to_lower(Riik))
 
 # Kõik suured tähed
 riigid %>%
-  mutate(Riik3 = str_to_upper(Riik))
-
-
-# str_to_title()
+  mutate(Riik1 = str_to_upper(Riik))
 
 # Iga sõna suure algustähega
 riigid %>%
-  mutate(Riik3 = str_to_title(Riik))
+  mutate(Riik1 = str_to_title(Riik))
 
 
-# str_detect()
-
-# Leia riigid, mille nimi sisaldab i-tähte
-riigid %>%
-  mutate(i_täht = str_detect(Riik, 'i'))
-
-
-# str_replace(), str_replace_all()
-
+## Filtreerimine ja asendamine mustri järgi
+   
+# Asenda veerus kokkulangevad mustrid: "e" -> "E"
+   
 # Milline on nende kahe funktsiooni erinevus?
 riigid %>%
   mutate(Riik1 = str_replace(Riik, 'e', 'E'),
          Riik2 = str_replace_all(Riik, 'e', 'E'))
 
-# Ülesanne: Asendage riikige nimed selliselt, et sõna "United" asemel on midagi muud.
-  
-riigid %>%
-  mutate(Riik_uus = str_replace(Riik, ..., ...))
-
-
-# Ülesanne: Leidke gapminder_ee andmestikust kõik riigid, mille nimes sisaldub "land"
+# Leia gapminder_ee andmestikust kõik riigid, mille nimes sisaldub "land"
 gapminder_ee %>%
-  filter(str_detect(Riik, 'land')) %>%
   select(Riik) %>%
-  distinct()
+  distinct() %>%
+  filter(str_detect(Riik, 'land')) 
