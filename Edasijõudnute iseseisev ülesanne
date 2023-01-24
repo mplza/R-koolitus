@@ -85,7 +85,7 @@ tellimused1
 
 1.  Muutke ära veergude nimed, et mitte ükski neist ei sisaldaks tühikuid.
 
-2.  Muutke segmendi veergu, et kõik sõnad algaksid suurte algustähtedega.
+2.  Muutke segmendi veergu, et kõik sõnad oleksid läbivalt suurte algustähtedega.
 
 3.  Viige andmestik korrastatud kujule, et ühe kliendi kõik andmed on ühel real.
 
@@ -95,7 +95,7 @@ tellimused1
 kliendid1 <- kliendid %>%
   rename(... = ...,
          ... = ...) %>%
-  mutate(... = str_to_title(...)) %>%
+  mutate(... = str_to_upper(...)) %>%
   pivot_wider(names_from = ..., values_from = ...)
 
 kliendid1
