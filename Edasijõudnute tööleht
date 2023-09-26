@@ -374,3 +374,92 @@ gapminder_ee %>%
   select(Riik) %>%
   distinct() %>%
   filter(str_detect(Riik, 'land')) 
+
+
+# KUUPÄEVADE TÖÖTLEMINE
+
+# Lae lubridate töölauale
+library(lubridate)
+
+# Praegune kuupäev ja kellaaeg
+today()
+now()
+
+class('20180308')
+class('2021/03/june')
+class('Sept 20, 2021')
+
+# R tunneb kuupäevad ära:
+ymd(20180308)
+ydm('2021/03/june')
+mdy('Sept 20, 2021')
+
+# Loome vektorid
+kuupäev <- c("24.02.1918", "24.10.1870", "17.02.2006", "23.04.1343", "02.02.1920", "14.09.1524", "20.08.1991", "25.06.1775") 
+sündmus <- c("Iseseisvumine", "Esimese raudteeliini avamine", "KUMU avamine", "Jüriöö ülestõus", "Tartu rahu", "Tallinna kirikute rüüstamine", "Taasiseseisvumine", "Tartu suurpõleng") 
+
+ee_sündmused <- tibble(kuupäev, sündmus) # loome vektoritest tibble andmeraami
+ee_sündmused
+
+ee_sündmused1 <- ee_sündmused %>%
+  mutate(uus_kuupäev = dmy(kuupäev)) # viime veeru standarsele kuupäeva kujule
+
+
+## Komponentide eraldamine
+
+ee_sündmused1 %>%
+  mutate(aasta = year(uus_kuupäev))
+
+ee_sündmused1 %>%
+  mutate(kuu = month(uus_kuupäev, label = TRUE, abbr = FALSE))
+
+ee_sündmused1 %>%
+  mutate(kvartal = quarter(uus_kuupäev))
+
+ee_sündmused1 %>%
+  mutate(nädal = week(uus_kuupäev),
+         iso_nädal = isoweek(uus_kuupäev))
+
+ee_sündmused1 %>%
+  mutate(nädalapäev = wday(uus_kuupäev, label = TRUE, abbr = FALSE))
+
+now()
+
+# Eraldame kuupäev-kellaajast kuupäeva komponendi
+date(now())
+
+hour(now())
+
+minute(now())
+
+## Kuupäevade ümardamine
+
+# Ümarda nädala esimese päevani
+round_date(today(), 'week', week_start = 1)
+
+# Ümarda lähima eelneva esmaspäevani - nädala esimene päev
+floor_date(today(), 'week', week_start = 1)
+
+floor_date(now(), 'hour')
+
+# Ümarda lähima järgneva esmaspäevani
+ceiling_date(today(), 'week', week_start = 1)
+
+ceiling_date(today(), 'month')
+
+## Kahe kuupäeva vahelise aja arvutamine
+
+library(readxl)
+tellimused <- read_excel("tellimused.xlsx")
+View(tellimused)
+
+tellimused %>%
+  rename(Order_ID = `Order ID`,
+         Tellimuse_kuupäev = `Order Date`,
+         Tarne_kuupäev = `Ship Date`) %>%
+  select(Order_ID, Tellimuse_kuupäev, Tarne_kuupäev) %>%
+  distinct() %>%
+  mutate(Tellimuse_kuupäev = date(Tellimuse_kuupäev),
+         Tarne_kuupäev = date(Tarne_kuupäev),
+         Tarne_aeg_päevades = as.integer(Tarne_kuupäev - Tellimuse_kuupäev),
+         Tarne_aeg_nädalates = difftime(Tarne_kuupäev, Tellimuse_kuupäev, units='weeks'))
