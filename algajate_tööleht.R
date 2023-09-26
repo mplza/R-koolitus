@@ -19,6 +19,8 @@ Sys.time()
 
 Sys.timezone()
 
+difftime(Sys.time(), '2023-09-01', units = 'days')
+
 # Objektide loomine: objekt <- väärtus
 
 nimi <- 'Mari'
