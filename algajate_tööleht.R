@@ -115,10 +115,10 @@ df$Sales %>%
   mean() %>%
   round(3)
 
-## Ülesanne 3: Kirjutage toru abil kood, mis esmalt leiab kõikide soodustuste 
+## Ülesanne 3: Kirjutage toru abil kood, mis esmalt leiab kasumi 
 # kogusumma ja seejärel ümardab tulemuse
 
-df$Discount %>%
+df$Profit %>%
   sum() %>%
   round()
 
