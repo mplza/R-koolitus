@@ -118,7 +118,7 @@ df$Sales %>%
 ## Ülesanne 3: Kirjutage toru abil kood, mis esmalt leiab kasumi 
 # kogusumma ja seejärel ümardab tulemuse
 
-df$Profit %>%
+df$... %>%
   sum() %>%
   round()
 
