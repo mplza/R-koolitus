@@ -36,7 +36,6 @@ paste('Õpin R-i, sest', miks, sep = ' ') # kleebime need omavahel kokku
 
 #install.packages('tidyverse') # installi Tidyverse paketid
 library(tidyverse) # lae Tidyverse tuumikpaketid töökeskkonda
-library(lubridate) # lae lubridate
 
 
 # ANDMETE IMPORTIMINE JA ESMANE ANALÜÜS
@@ -468,7 +467,6 @@ df1 %>%
 
 
 # lubridate
-library(lubridate)
 
 # Kuupäev ja kellaaeg
 today() # praegune kuupäev 
@@ -939,7 +937,7 @@ library(lubridate)
 library(readxl)
 andmestik <- read_excel("Superstore_clean.xlsx")
 
-# Arvutame müügitulemused iga kuu ja kliendisegm kaupa 
+# Arvutame müügitulemused iga kuu ja kliendisegmendi kaupa 
 andmestik1 <- andmestik %>%
   mutate(Kuu = date(floor_date(Order_Date, 'month'))) %>%
   group_by(Kuu, Segment) %>%
