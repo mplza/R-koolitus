@@ -24,41 +24,56 @@ gapminder %>%
   mutate_if(is.character, as.factor) %>% # muuda sõned faktoriteks
   summary()
 
+# DPLYR EDASIJÕUDNUTELE
+   
+
+## Andmestike kombineerimine
+  
+# Loome näidisandmestikud: kontoritooted, pagaritooted & hinnad
+kontoritooted <- tibble(Tootekood = c(5, 10, 15, 20), 
+                        Toote_nimi = c('Kaustik', 'Pastakas', 'Kalkulaator', 'Marker'),
+                        Suurus = c('Suur', 'Väike', 'Keskmine', 'Mega')) 
+   
+pagaritooted <- tibble(Tootekood = c(25, 30, 35, 40), 
+                       Toote_nimi = c('Vormileib', 'Sai', 'Sepik', 'Seemneleib'), 
+                       Suurus = c('Mega', 'Väike', 'Keskmine', 'Suur')) 
+   
+hinnad <- tibble(Tootekood = c(10, 15, 20, 25), 
+                 Hind = c(3, 2, 10, 5), 
+                 Valuuta = c('euro', 'euro', 'euro', 'euro'))
+
+kontoritooted 
+pagaritooted 
+hinnad
+
+   
+### Bind meetodid
+   
+# Kaks tabelit horisontaalselt kokku 
+bind_rows(kontoritooted, pagaritooted) 
+
+# Kaks tabelit vertikaalselt kokku 
+bind_cols(kontoritooted, hinnad)
+
+   
+### Join meetodid
+     
+# left_join() 
+kõik_tooted <- left_join(kontoritooted, hinnad, by = 'Tootekood') 
+kõik_tooted
+
+# right_join() 
+right_join(kontoritooted, hinnad, by = 'Tootekood') 
+
+# inner_join() 
+inner_join(kontoritooted, hinnad, by = 'Tootekood') 
+
+# full_join() 
+full_join(kontoritooted, hinnad, by = 'Tootekood')
 
 
-# TOIMINGUD VEERGUDEGA
-
-
-## Veergude ümbernimetamine
-
-# Nimetamine veerud ümber: eestikeelsed pealkirjad
-gapminder_ee <- gapminder %>%
-  rename(Riik = 'country',
-         Kontinent = 'continent',
-         Aasta = 'year',
-         Oodatav_eluiga = 'lifeExp',
-         Rahvaarv = 'pop',
-         SKP = 'gdpPercap')
-
-# Vaatame tulemust
-gapminder_ee
-
-
-## Veergude liitmine ja lahutamine
-
-# Ühendame kontinendi ja aasta veerud üheks veeruks
-gapminder_unite <- gapminder_ee %>%
-  unite(Kontinent_Aasta, c('Kontinent', 'Aasta'), sep = '_')
-
-gapminder_unite
-
-# Eraldame Kontinent_Aasta veerud kaheks eraldi veeruks
-gapminder_separate <- gapminder_unite %>%
-  separate(Kontinent_Aasta, c('Kontinent', 'Aasta'), sep = '_')
-
-gapminder_separate
-
-
+# Ülesanne: Kuidas ühendada omavahel andmestikud table4a_tidy ja table4b_tidy?
+left_join(table4a_tidy, table4b_tidy, by = c('country', 'year'))
 
 # PUUDUVAD ANDMED
 
@@ -122,23 +137,13 @@ kommid2 %>%
   #group_by(kategooria) %>% # iga grupi kohta
   mutate(kaal_grammides1 = replace_na(kaal_grammides, mean(kaal_grammides, na.rm = TRUE)))
 
-# Asenda puuduvad andmed eelmise teadaolevaga
-kommid2 %>%
-  select(toode, kategooria, kaal_grammides) %>%
-  mutate(kaal_grammides_uus1 = kaal_grammides, # kopeerimine kaalu veergu 2x
-         kaal_grammides_uus2 = kaal_grammides) %>%
-  #group_by(kategooria) %>% # kategooriate kaupa
-  fill(kaal_grammides_uus1, .direction = 'down') %>% # asenda eelmise teadaolevaga
-  fill(kaal_grammides_uus2, .direction = 'up') # asenda järgmise teadaolevaga
-
+# Asenda veeru väärtused tingimuste alusel
 kommid3 <- kommid2 %>%
   mutate(kaal_grammides1 = case_when(
     kategooria %in% c('Marmelaadikommid', 'Pralineekommid') ~ 175, # tingimus 1
     kategooria == 'Batoonikesed' ~ 150, # tingimus 2
     TRUE ~ kaal_grammides) # kõik muud juhud
   ) 
-
-
 
 # ANDMESTIKU KUJU MUUTMINE
 
@@ -180,58 +185,6 @@ table4b_tidy <- table4b %>%
 table4b_tidy
 
 
-
-# DPLYR EDASIJÕUDNUTELE
-   
-
-## Andmestike kombineerimine
-  
-# Loome näidisandmestikud: kontoritooted, pagaritooted & hinnad
-kontoritooted <- tibble(Tootekood = c(5, 10, 15, 20), 
-                        Toote_nimi = c('Kaustik', 'Pastakas', 'Kalkulaator', 'Marker'),
-                        Suurus = c('Suur', 'Väike', 'Keskmine', 'Mega')) 
-   
-pagaritooted <- tibble(Tootekood = c(25, 30, 35, 40), 
-                       Toote_nimi = c('Vormileib', 'Sai', 'Sepik', 'Seemneleib'), 
-                       Suurus = c('Mega', 'Väike', 'Keskmine', 'Suur')) 
-   
-hinnad <- tibble(Tootekood = c(10, 15, 20, 25), 
-                 Hind = c(3, 2, 10, 5), 
-                 Valuuta = c('euro', 'euro', 'euro', 'euro'))
-
-kontoritooted 
-pagaritooted 
-hinnad
-
-   
-### Bind meetodid
-   
-# Kaks tabelit horisontaalselt kokku 
-bind_rows(kontoritooted, pagaritooted) 
-
-# Kaks tabelit vertikaalselt kokku 
-bind_cols(kontoritooted, hinnad)
-
-   
-### Join meetodid
-     
-# left_join() 
-kõik_tooted <- left_join(kontoritooted, hinnad, by = 'Tootekood') 
-kõik_tooted
-
-# right_join() 
-right_join(kontoritooted, hinnad, by = 'Tootekood') 
-
-# inner_join() 
-inner_join(kontoritooted, hinnad, by = 'Tootekood') 
-
-# full_join() 
-full_join(kontoritooted, hinnad, by = 'Tootekood')
-
-
-# Ülesanne: Kuidas ühendada omavahel andmestikud table4a_tidy ja table4b_tidy?
-left_join(table4a_tidy, table4b_tidy, by = c('country', 'year'))
- 
    
 ## Vektoriseeritud funktsioonid
    
@@ -333,6 +286,37 @@ gapminder_ee %>%
             Kümnes = nth(Riik, 10))
    
 
+# TOIMINGUD VEERGUDEGA
+
+
+## Veergude ümbernimetamine
+
+# Nimetamine veerud ümber: eestikeelsed pealkirjad
+gapminder_ee <- gapminder %>%
+  rename(Riik = 'country',
+         Kontinent = 'continent',
+         Aasta = 'year',
+         Oodatav_eluiga = 'lifeExp',
+         Rahvaarv = 'pop',
+         SKP = 'gdpPercap')
+
+# Vaatame tulemust
+gapminder_ee
+
+
+## Veergude liitmine ja lahutamine
+
+# Ühendame kontinendi ja aasta veerud üheks veeruks
+gapminder_unite <- gapminder_ee %>%
+  unite(Kontinent_Aasta, c('Kontinent', 'Aasta'), sep = '_')
+
+gapminder_unite
+
+# Eraldame Kontinent_Aasta veerud kaheks eraldi veeruks
+gapminder_separate <- gapminder_unite %>%
+  separate(Kontinent_Aasta, c('Kontinent', 'Aasta'), sep = '_')
+
+gapminder_separate
 
 
 # TEKSTILISTE ANDMETE TÖÖTLEMINE
