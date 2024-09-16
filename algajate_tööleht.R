@@ -808,7 +808,6 @@ tellimused3 %>%
 
 # Lae paketid
 library(tidyverse)
-library(lubridate)
 
 # Loe andmed sisse
 library(readxl)
