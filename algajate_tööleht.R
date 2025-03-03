@@ -1,7 +1,7 @@
 # R ALGAJATE KOOLITUSPÄEVA TÖÖLEHT
 
 # Kirjutage konsooli suvalisi arvutustehteid ja vaadake, mis juhtub!
-
+  
 2+3 # liitmine
 12-8 # lahutamine
 6*5 # korrutamine
@@ -14,14 +14,14 @@
 1:10 # reastab kõik arvud 1st 10ni
 
 # Kirjutage konsooli ükshaaval järgmised käsud ja vaadake, mis juhtub!
+  
+now()
 
-Sys.time()
+today()
 
 Sys.timezone()
 
-difftime(Sys.time(), '2023-09-01', units = 'days')
-
-# Objektide loomine: objekt <- väärtus
+# Objektide loomine: `objekt <- väärtus
 
 nimi <- 'Mari'
 mida_teeb <- 'töötab'
@@ -34,15 +34,19 @@ paste('Õpin R-i, sest', miks, sep = ' ') # kleebime need omavahel kokku
 
 # MIS ON TIDYVERSE?
 
-#install.packages('tidyverse') # installi Tidyverse paketid
+install.packages('tidyverse') # installi Tidyverse paketid 
 library(tidyverse) # lae Tidyverse tuumikpaketid töökeskkonda
+library(lubridate) # lae lubridate
 
 
 # ANDMETE IMPORTIMINE JA ESMANE ANALÜÜS
 
 library(readxl)
-df <- read_excel("Superstore_clean.xlsx")
-View(df)                                                 
+Superstore_clean <- read_excel("Superstore_clean.xlsx")
+View(Superstore_clean)                                                           
+
+df <- Superstore_clean # loome uue nimega andmestiku df
+
 
 # ANDMETEGA TUTVUMINE
 
@@ -50,11 +54,10 @@ View(df)
 
 View(df) # ava andmestik vahelehel
 
-head(df, 2) # esimesed 6 rida
-tail(df, 7) # viimased 6 rida
+head(df) # esimesed 6 rida
+tail(df) # viimased 6 rida
 
 head(df, 3) # esimesed 3 rida
-tail(df, 5) # viimased 5 rida
 
 names(df) # veergude pealkirjad
 
@@ -63,16 +66,16 @@ str(df) # struktuuri kirjeldus
 summary(df) # statistiline kokkuvõte
 
 glimpse(df) # glimpse() - mugav ülevaade
-
+ 
 df$State # kõik selle veeru väärtused
 head(df$State, 10) # selle veeru esimesed 10 rida
-
+ 
 unique(df$State) # unique() - vektori unikaalsed väärtused 
 
 ## Ülesanne 
 # Leidke veergude `Country`, `Segment`, `Category` & `Sub_Category` unikaalsed väärtused.
-
-unique(df$Sub_Category)
+  
+unique(df$...)
 
 
 ## Summaarsed funktsioonid
@@ -96,12 +99,12 @@ median(df$Sales)
 sd(df$Sales) 
 
 # round() - ümardamine
-round(mean(df$Sales), 2)
+round(mean(df$Sales))
 
 ## Ülesanne 2
 # Leidke need väärtused veerule `Quantity`.
-
-min(df$Quantity)
+  
+...(df$Quantity)
 
 
 ## Toru
@@ -112,31 +115,21 @@ round(mean(df$Sales))
 # Toruga
 df$Sales %>%
   mean() %>%
-  round(2)
+  round()
 
-## Ülesanne 3: Kirjutage toru abil kood, mis esmalt leiab kasumi 
-# kogusumma ja seejärel ümardab tulemuse
+## Ülesanne 3
 
-df$Profit %>%
+df$... %>%
   sum() %>%
   round()
 
 
 ## Andmetüübid ja -struktuurid
 
-class(df$Sales)
-class(df$Customer_Name)
-
-# Struktuurid
-ship_mode <- df$Ship_Mode
-ship_mode
-head(ship_mode)
-class(ship_mode)
-
 # Loome vektorid
 kuupäev <- c("24.02.1918", "24.10.1870", "17.02.2006", "23.04.1343", "02.02.1920", "14.09.1524", "20.08.1991", "25.06.1775") 
 sündmus <- c("Iseseisvumine", "Esimese raudteeliini avamine", "KUMU avamine", "Jüriöö ülestõus", "Tartu rahu", "Tallinna kirikute rüüstamine", "Taasiseseisvumine", "Tartu suurpõleng") 
-
+ 
 # Loome andmeraami vektoritest
 ee_sündmused <- tibble(kuupäev, sündmus) # loome vektoritest tibble andmeraami
 ee_sündmused
@@ -163,7 +156,7 @@ df %>%
 df1 <- df %>% 
   select(Order_Date, Order_ID, Customer_Name, Segment, Category, Sub_Category, Product_Name, Sales, Quantity)
 df1
-
+ 
 df %>%
   select(starts_with('Product'))
 
@@ -193,21 +186,20 @@ df2
 # kliendid: kliendi ID, nimi, segment, osariik, linn, postiindeks, regioon
 
 kliendid <- df %>%
-  select(Customer_ID, Customer_Name, Segment, State, City, Postal_Code, Region) %>%
+  select(...) %>%
   distinct() 
 
 # kliendid2: jätke andmestikust kliendid välja veerud postiindeks & regioon
 
 kliendid2 <- kliendid %>%
-  select(-c(Postal_Code, Region))
-kliendid2
+  select(...)
 
 # tooted: toote ID, kategooria, alamkategooria, nimi
 
 tooted <- df %>%
-  select(Product_ID, Category, Sub_Category, Product_Name) %>%
+  select(...) %>%
   distinct()
-tooted
+
 
 ### filter()
 
@@ -231,7 +223,7 @@ df1 %>%
 
 df1 %>%
   select(Product_Name, Quantity) %>%
-  filter(Quantity >= 10)
+  filter(Quantity >= 10) 
 
 # Leiame kodukontori kliendid, kes on ostnud koopiamasinaid:
 
@@ -244,15 +236,16 @@ df1 %>%
 # Millised tellimused sisaldavad toodet "Surelock Post Binders"?
 
 df1 %>%
-  select(Order_ID, Product_Name) %>%
-  filter(Product_Name == 'Surelock Post Binders')
+  select(...) %>%
+  filter(... == ...)
 
 # Millised kliendid on ostnud mööblit ühe tellimusega vähemalt 4000 dollari eest?
 
 df1 %>%
-  select(Customer_Name, Category, Sales) %>%
-  filter(Category == 'Furniture',
-         Sales >= 4000) 
+  select(...) %>%
+  filter(... == ...,
+         ... >= ...) 
+
 
 #### Loogilised operaatorid II
 
@@ -264,12 +257,11 @@ df1 %>%
 # valime kõik read, kus kategooria on tehnoloogia (Technology) ja kogus on vähemalt 10
 df1 %>%
   filter(Category == 'Technology' &
-           Quantity >= 10)
+         Quantity >= 10)
 
 # ostusumma on üle 1000 või segment on äriklient
 df1 %>% 
   filter(Sales > 1000 | Segment == 'Corporate')
-
 
 # kategooria on tehnoloogia, aga ilma telefonide alamkategooriata
 df1 %>% 
@@ -284,49 +276,38 @@ df1 %>%
 df1 %>%
   filter(Sub_Category %in% c('Chairs', 'Art', 'Copiers')) # alamkategooria kuulub hulka 'Chairs', 'Art', 'Copiers'
 
-df1 %>%
-  filter(Sub_Category == 'Chairs' | Sub_Category == 'Art' | Sub_Category == 'Copiers')
-
-
 # mitte need alamkategooriad
 df1 %>%
   filter(!Sub_Category %in% c('Chairs', 'Art', 'Copiers')) # alamkategooria ei kuulu hulka 'Chairs', 'Art', 'Copiers'
-  
+
 ### Ülesanne 6
 # Millised kliendid on ostnud tooteid alamkategooriatest Labels või Furnishings?
 
 df %>%
-  select(Customer_Name, Sub_Category) %>%
-  filter(Sub_Category %in% c('Labels', 'Furnishings')) # <-- SEE ON PAREM
-
-df %>%
-  select(Customer_Name, Sub_Category) %>%
-  filter(Sub_Category == 'Labels' | Sub_Category == 'Furnishings') # <-- KUI SEE
-
+  select(... = ) %>%
+  filter(... %in% c(...))
 
 # Milliseid tooteid on korraga ostetud üle 10 ühiku või vähemalt 2000 dollari eest?
 
 df1 %>%
-  select(Product_Name, Sales, Quantity) %>%
-  filter(Quantity > 10 | Sales >= 2000)
+  select(...) %>%
+  filter(... | ...0)
 
 # Milliseid raamaturiiuleid (Bookcases) on ostnud tavakliendid (Consumer) ühe tellimusega vähemalt 2000 dollari eest?
 
 df1 %>%
-  filter(Sub_Category == 'Bookcases', 
-         Segment == 'Consumer', 
-         Sales >= 2000) %>%
-  select(Product_Name) %>%
-  distinct()
+  filter(... == ...,
+         ... == ...,
+         ... >= ...) %>%
+  select(...)
 
 
 ### mutate()
 
 # Loome uue veeru
-df5 <- df1 %>% 
+df1 %>% 
   select(Order_ID, Product_Name, Sales, Quantity) %>%
   mutate(tyki_hind = Sales / Quantity) # ühe tüki hind
-df5
 
 # Muudame olemasoleva veeru väärtust
 df1 %>%
@@ -343,17 +324,16 @@ df1 %>%
 ### Ülesanne 7
 # Muutke veergu Sales, et summad oleksid ümardatud täisarvuni.
 
-df1 <- df1 %>%
-  mutate(Sales = round(Sales))
-df1
+df1 %>%
+  mutate(... = round(...))
 
 # Leidke tehnoloogiatooted, mille ühe tüki hind on üle 1000 dollari.
 
 df1 %>%
-  mutate(Yhe_tyki_hind = Sales / Quantity) %>%
-  filter(Category == 'Technology',
-         Yhe_tyki_hind > 1000) %>%
-  select(Product_Name, Sub_Category, Yhe_tyki_hind) %>%
+  mutate(... = ...) %>%
+  filter(... == ...,
+         ... > ...) %>%
+  select(...) %>%
   distinct()
 
 
@@ -368,7 +348,7 @@ df %>%
 df %>% 
   select(Product_Name, Quantity, Sales) %>%
   arrange(desc(Sales))
-
+ 
 # Tõusvas järjekorras - tekstilised väärtused
 df %>% 
   select(Sub_Category) %>%
@@ -380,7 +360,7 @@ df %>%
   select(Sub_Category) %>%
   distinct() %>%
   arrange(desc(Sub_Category))
-
+ 
 # Mida see kood teeb?
 df %>% 
   select(Category, Sub_Category) %>%
@@ -393,24 +373,24 @@ df %>%
 # Reastage tellimused kliendi järgi tähestikulises järjekorras.
 
 df1 %>%
-  select(Order_ID, Customer_Name) %>%
+  select(...) %>%
   distinct() %>%
-  arrange(Customer_Name)
+  arrange(...)
 
 # Leidke 10 seadet (Appliances), mida on ühe tellimusega kõige enam müüdud.
 
 df1 %>%
-  filter(Sub_Category == 'Appliances') %>%
-  select(Product_Name, Quantity) %>%
-  arrange(desc(Quantity)) %>%
+  filter(... == ...) %>%
+  select(...) %>%
+  arrange(desc(...)) %>%
   head(10)
 
 
-### summarize(
+### summarize()
 
 # Unikaalsete klientide arv
 df1 %>%
-  summarize(Klientide_arv = n_distinct(Customer_Name))
+  summarize(n_distinct(Customer_Name))
 
 # Unikaalsete tellimuste arv
 df1 %>%
@@ -423,7 +403,7 @@ df1 %>%
 # Kõige suurem ostusumma
 df1 %>%
   summarise(max(Sales))
-
+ 
 # koos group_by() funktsiooniga 
 
 # Mitu korda on igat toodet müüdud?
@@ -434,8 +414,7 @@ df1 %>%
 # Leidke tellimuste arv alamkategooriate kaupa
 df1 %>%
   group_by(Sub_Category) %>%
-  summarise(Tellimuste_arv = n_distinct(Order_ID)) %>%
-  arrange(desc(Tellimuste_arv))
+  summarise(Tellimuste_arv = n_distinct(Order_ID))
 
 # Tellimuste arv, kogusumma, müüdud ühikute arv ja keskmine tellimuse summa segmentide kaupa
 df1 %>%
@@ -449,31 +428,162 @@ df1 %>%
 # Milline on kõige suurema ostusummaga toode?
 
 df1 %>%
-  select(Product_Name, Sales) %>%
-  filter(Sales == max(Sales))
+  select(...) %>%
+  filter(... == max(...))
 
 # Leidke unikaalsete toodete arv kategooriate ja alamkategooriate kaupa.
 
 df1 %>%
-  group_by(Category, Sub_Category) %>%
-  summarise(Toodete_arv = n_distinct(Product_Name))
+  group_by(...) %>%
+  summarise(... = n_distinct(...))
 
 # Leidke kõikide tootekategooriate täielik müügisumma ja müüdud ühikute arv. Järjestage tulemused summa järgi suuremast väiksemani.
 
 df1 %>%
-  group_by(Category) %>%
-  summarise(Sales = sum(Sales),
-            Quantity = sum(Quantity)) %>%
-  arrange(desc(Sales))
+  group_by(...) %>%
+  summarise(... = sum(...),
+            ... = sum(...)) %>%
+  arrange(desc(...))
 
 # Millised ärikliendid on esitanud vähemalt 10 tellimust?
 
 df1 %>%
-  filter(Segment == 'Corporate') %>%
-  group_by(Customer_Name) %>%
-  summarise(Tellimused = n_distinct(Order_ID)) %>%
-  filter(Tellimused >= 10)
+  filter(... == ...) %>%
+  group_by(... = ) %>%
+  summarise(... = n_distinct(...)) %>%
+  filter(... >= ...)
 
+
+# lubridate
+
+# Kuupäev ja kellaaeg
+today() # praegune kuupäev 
+now() # praegune kuupäev ja kellaaeg 
+    
+# R tunneb kuupäevad ära:
+ymd(20180308) 
+ydm('2021/03/june') 
+mdy('Sep 20, 2021')
+
+ee_sündmused
+
+ee_sündmused1 <- ee_sündmused %>% 
+  mutate(uus_kuupäev = dmy(kuupäev))
+
+ee_sündmused1
+
+## Ajaliste komponentide eraldamine
+              
+# Praegune aasta 
+year(now()) 
+              
+# Lisame veeru sündmuse aastaga
+ee_sündmused1 %>%
+  mutate(Aasta = year(uus_kuupäev))
+
+# Praegune kvartal 
+quarter(now()) 
+              
+# Lisame veeru sündmuse aastaga
+ee_sündmused1 %>%
+mutate(Kvartal = quarter(uus_kuupäev))
+
+# Kuu 
+month(now()) 
+month(now(), label = TRUE, abbr = TRUE) 
+              
+# Lisame veeru sündmuse kuuga
+ee_sündmused1 %>%mutate(Kuu = month(uus_kuupäev, label = TRUE, abbr = FALSE))
+
+# Nädal 
+week(now()) 
+              
+# Lisame veeru sündmuse nädalaga
+ee_sündmused1 %>%
+  mutate(Nädal = week(uus_kuupäev))
+
+# Nädalapäev 
+wday(now()) 
+wday(now(), label = TRUE, abbr = FALSE) 
+              
+# Lisame veeru sündmuse nädalapäevaga
+ee_sündmused1 %>%
+  mutate(Nädalapäev = wday(uus_kuupäev, label = TRUE, abbr = TRUE))
+
+# Kuupäeva komponendi eraldamine
+date(now()) # annab sama tulemuse mis today()
+
+tellimused <- df %>%
+  select(Order_ID, Order_Date, Ship_Date, Segment, Category, Sub_Category, Product_ID, Sales, Quantity, Profit, Discount) 
+              
+tellimused
+
+tellimused1 <- tellimused %>%
+  mutate(Tellimuse_kuupäev = date(Order_Date),
+         Tarne_kuupäev = date(Ship_Date),
+         Aasta = year(Order_Date),
+         Kuu = month(Order_Date, label = TRUE)) %>%
+  select(-c(Order_Date, Ship_Date))
+              
+tellimused1
+
+## Ülesanne 10
+# Kasutades andmestikku `tellimused`:
+# Leidke 2016. aasta müügi kogusummad kuude lõikes.
+
+tellimused %>%
+  mutate(Aasta = ...,
+         Kuu = ... = ) %>%
+  filter(... == ...) %>%
+  group_by(...) %>%
+  summarise(... = sum(...))
+
+# Leidke kõigi aastate müügi kogusummad tootekategooriate kaupa.
+                
+tellimused %>%
+  mutate(... = ...) %>%
+  group_by(..., ...) %>%
+  summarise(... = sum(...))
+
+## Kuupäevade ümardamine
+              
+# Ümarda nädala esimese päevani
+round_date(today(), 'week', week_start = 1)
+              
+# Ümarda lähima eelneva esmaspäevani - nädala esimene päev
+floor_date(today(), 'week', week_start = 1)
+              
+# Ümarda lähima järgneva esmaspäevani
+ceiling_date(today(), 'week', week_start = 1)
+
+## Ülesanne 11
+# Ümardage praegune kellaaeg lähima täistunnini**
+
+... %>%
+  round_date(...)
+
+# Ümardage praegune kuupäev järgmise lähima kuuni.**
+                
+... %>%
+  ceiling_date(...)
+              
+
+## Kahe kuupäeva vahelise aja arvutamine
+              
+# Kui kaua kulus tellimuse esitamisest tellimuse väljastamiseni?
+tellimused2 <- tellimused1 %>%
+  mutate(Tarne_aeg = Tarne_kuupäev - Tellimuse_kuupäev, # kahe kuupäeva vaheline aeg sõnades
+         Tarne_aeg_päevades = as.integer(Tarne_kuupäev - Tellimuse_kuupäev), # päevade arv
+         Tarne_aeg_nädalates = as.integer(difftime(Tarne_kuupäev, Tellimuse_kuupäev, unit="weeks"))) # nädalate arv
+
+tellimused2
+
+## Ülesanne 12
+# Kasutades andmestikku `tellimused`: Leidke tellimused, mille täitmiseni kulus 7 või rohkem päeva.**
+
+tellimused %>%
+  mutate(Aeg_tellimuse_täitmiseni = ...) %>%
+  filter(... >= ...)
 
 # ANDMETE VISUALISEERIMINE (ggplot2)
 
@@ -492,27 +602,28 @@ tellimused1 %>%
 # Värvi täpid tootekategooria järgi
 tellimused1 %>% 
   filter(Profit > 0) %>%
-  ggplot(aes(Profit, Sales, shape = Category)) + 
+  ggplot(aes(Profit, Sales, color = Category)) + 
   geom_point()
 
 # Värvi täpid müügisumma järgi
 tellimused1 %>% 
   filter(Profit > 0) %>%
-  ggplot(aes(Profit, Sales, color = Sales)) +
+  ggplot(aes(Profit, Sales, color = Sales)) + 
   geom_point()
 
 # Värvi kõik täpid punaseks
 tellimused1 %>% 
   filter(Profit > 0) %>%
   ggplot(aes(Profit, Sales)) + 
-  geom_point(color = 'orange')
+  geom_point(color = 'red')
 
 ### Ülesanne 13
-# Loo hajuvusdiagramm, mis võrdleb müügisummat ja kasumit ning värvi täpid kuu järgi.
-
+# Loo hajuvusdiagramm, mis võrdleb müügisummat ja kasumit ning värvi täpid nädalapäeva järgi.
+  
 tellimused1 %>% 
-  ggplot(aes(Sales, Profit, color = Kuu)) + 
-  geom_point()
+  ggplot(aes(..., ..., color = ...)) + 
+  ...()
+
 
 
 ## Tulpdiagramm
@@ -555,8 +666,8 @@ tellimused1 %>%
   group_by(Aasta, Category) %>%
   summarise(Quantity = sum(Quantity)) %>%
   ggplot(aes(Aasta, Quantity, fill = Category)) + 
-  geom_col(position = 'stack') # vaikimisi: position = 'stack'
-
+  geom_col() # vaikimisi: position = 'stack'
+ 
 # Müüdud toodete arv aastate kaupa
 # Värv tootekategooria järgi
 tellimused1 %>% 
@@ -564,7 +675,7 @@ tellimused1 %>%
   summarise(Quantity = sum(Quantity)) %>%
   ggplot(aes(Aasta, Quantity, fill = Category)) + 
   geom_col(position = 'dodge') # grupid üksteise kõrvale
-
+ 
 # Müüdud toodete arv aastate kaupa
 # Värv tootekategooria järgi
 tellimused1 %>% 
@@ -601,11 +712,11 @@ tellimused1 %>%
 
 #### Ülesanne 14
 # Loo tulpdiagramm, mis võrdleb 2015.a müügitulemusi kuude ja tootekategooriate kaupa.
-
+  
 tellimused1 %>% 
-  filter(Aasta == 2015) %>%
-  ggplot(aes(Kuu, Sales, fill = Category)) + 
-  geom_col(position = 'stack')
+  filter(... == ...) %>%
+  ggplot(aes(..., ..., fill = ...)) + 
+  geom_col(position = ...)
 
 
 ## Joondiagramm
@@ -618,54 +729,52 @@ tellimused3 <- df %>%
             Klientide_arv = n_distinct(Customer_Name),
             Myyk = sum(Sales),
             Kasum = sum(Profit),
-            Soodustused = sum(Sales*Discount))
+            Soodustused = sum(Discount))
 
 tellimused3
-
+ 
 # Ühe joonega: tellimuste arv kuude kaupa
 tellimused3 %>%
-  mutate(aasta = year(Kuu)) %>%
-  filter(aasta == 2015) %>%
   group_by(Kuu) %>%
   summarise(Tellimuste_arv = sum(Tellimuste_arv)) %>% 
   ggplot(aes(Kuu, Tellimuste_arv)) +
   geom_line() +
   geom_smooth() # trendijoone lisamine
-
+ 
 # Mitme joonega: tellimuste arv kuude kaupa segmentide lõikes
 tellimused3 %>%
-  ggplot(aes(Kuu, Tellimuste_arv, group = Segment, color = Segment)) +
+  ggplot(aes(Kuu, Tellimuste_arv, group = Segment)) +
   geom_line()
 
 ### Joondiagrammi kujundamine
-
-# oranž joon
+ 
+# roheline joon
 tellimused3 %>%
   filter(Kuu >= '2017-01-01') %>%
   group_by(Kuu) %>%
   summarise(Tellimuste_arv = sum(Tellimuste_arv)) %>% 
   ggplot(aes(Kuu, Tellimuste_arv)) +
-  geom_line(color = 'orange')
+  geom_line(color = 'green')
 
 # joon segmendi järgi
 tellimused3 %>%
   filter(Kuu >= '2017-01-01') %>%
-  ggplot(aes(Kuu, Tellimuste_arv, linetype = Segment)) +
+  ggplot(aes(Kuu, Tellimuste_arv, color = Segment)) +
   geom_line()
 
 # joonte värv, tüüp, läbipaistvus ja paksus
 tellimused3 %>%
   filter(Kuu >= '2017-01-01') %>%
-  ggplot(aes(Kuu, Tellimuste_arv, color = Segment)) +
-  geom_line(alpha = 0.3, size = 2)
+  ggplot(aes(Kuu, Tellimuste_arv, color = Segment, linetype = Segment)) +
+  geom_line(alpha = 0.6, size = 2)
 
 
 #### Ülesanne 15
 # Loo joondiagramm, mis võrdleb 2017.a klientide arvu kuude ja segmentide kaupa.
-
+  
 tellimused3 %>%
-  filter(Kuu >= '2017-01-01') %>%
-  ggplot(aes(Kuu, Klientide_arv, color = Segment)) +
+  filter(... >= ...) %>%
+  ggplot(aes(..., ..., ... = ...)) +
   geom_line()
 
 
@@ -675,7 +784,6 @@ tellimused3 %>%
 
 # Alamkategooriad müüdud ühikute järgi suuremast väiksemani
 tellimused1 %>% 
-  filter(Aasta == 2016) %>%
   group_by(Category, Sub_Category) %>%
   summarise(Quantity = sum(Quantity)) %>%
   ggplot(aes(fct_reorder(Sub_Category, Quantity, .fun = sum, .desc = FALSE), Quantity, fill = Quantity)) + 
@@ -683,7 +791,7 @@ tellimused1 %>%
   coord_flip() +
   # Sildid 
   labs(title = 'Müüdud ühikute arv erinevates tootekategooriates',
-       subtitle = '2016', 
+       subtitle = '', 
        fill = '',
        x = '', 
        y = '') 
@@ -702,7 +810,7 @@ tellimused1 %>%
        y = '') +
   # Peida legend 
   theme(legend.position = 'none')
-
+ 
 # alamkategooriad müüdud ühikute järgi suuremast väiksemani - kvalitatiivne värviskaala
 tellimused1 %>% 
   group_by(Category, Sub_Category) %>%
@@ -721,7 +829,7 @@ tellimused1 %>%
 
 ### Värvipaletid
 
-#install.packages('RColorBrewer') 
+#install.packages(RColorBrewer) 
 library(RColorBrewer) 
 display.brewer.all()
 
@@ -756,7 +864,7 @@ tellimused1 %>%
        y = '') + 
   theme(legend.position = 'bottom') +
   # Värvipaleti muutmine 
-  scale_fill_brewer(palette = 'Set2')
+  scale_fill_brewer(palette = 'Accent')
 
 ### Kujundustemaatikad
 
@@ -777,26 +885,22 @@ tellimused1 %>%
   # Värvipaleti muutmine 
   scale_fill_brewer(palette = 'Accent') + 
   # Kujundustemaatika lisamine 
-  theme_classic()
+  theme_minimal()
 
 ### Ülesanne 16
-# Valige joonis ülesandest 13, 14 või 15 ja kujundage see oma soovi järgi: värvipalett, sildid, legend, temaatika
-
-tellimused3 %>%
-  filter(Kuu >= '2017-01-01') %>%
-  ggplot(aes(Kuu, Klientide_arv, color = Segment)) +
-  geom_line(size = 3) +
+# Valige joonis ülesandest 13, 14 või 15 ja kujundage see oma soovi järgi: värvipalett, sildid, legend, temaatika**
+  
+... +
   # Värvipalett
-  scale_color_brewer(palette = 'Accent') +
+  scale_..._brewer(palette = ...) +
   # Sildid 
-  labs(title = '2017. aasta klientide arv segmentide kaupa',
-       x = '', 
-       y = '',
-       color = '') +
-  # Temaatika
-  theme_light() +  
+  labs(title = ...,
+       x = ..., 
+       y = ...) +
   # Legend
-  theme(legend.position = 'bottom')
+  theme(legend.position = ...) +
+  # Temaatika
+  theme_...()
 
 
 # ANDMED RSTUDIOST VÄLJA
@@ -808,12 +912,13 @@ tellimused3 %>%
 
 # Lae paketid
 library(tidyverse)
+library(lubridate)
 
 # Loe andmed sisse
 library(readxl)
 andmestik <- read_excel("Superstore_clean.xlsx")
 
-# Arvutame müügitulemused iga kuu ja kliendisegmendi kaupa 
+# Arvutame müügitulemused iga kuu ja kliendisegm kaupa 
 andmestik1 <- andmestik %>%
   mutate(Kuu = date(floor_date(Order_Date, 'month'))) %>%
   group_by(Kuu, Segment) %>%
@@ -828,5 +933,6 @@ andmestik1 <- andmestik %>%
 library(openxlsx) 
 write.xlsx(andmestik1, 'andmestik1.xlsx', overwrite = TRUE) 
 
+# Lõpetuseks
 hinnang <- '...'
-paste('Tänane õppepäev on olnud', hinnang, sep = ' ')
+paste('Tänane õppepäev oli', hinnang, sep = ' ')
