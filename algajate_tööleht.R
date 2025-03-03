@@ -36,8 +36,6 @@ paste('Õpin R-i, sest', miks, sep = ' ') # kleebime need omavahel kokku
 
 install.packages('tidyverse') # installi Tidyverse paketid 
 library(tidyverse) # lae Tidyverse tuumikpaketid töökeskkonda
-library(lubridate) # lae lubridate
-
 
 # ANDMETE IMPORTIMINE JA ESMANE ANALÜÜS
 
