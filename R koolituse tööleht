@@ -1,12 +1,10 @@
 # Koolituse tööleht
 
-# Siin on I ja II õppepäeva kood, mille saate endale R-i skripti kopeerida. Nii saate keskenduda materjali omandamisele, mitte selle ümber kirjutamisele.
-
 # I õppepäev
 
 ## RStudio töökeskkond ja koodi jooksutamine
 
-#Kirjutage konsooli suvalisi arvutustehteid ja vaadake, mis juhtub!
+# Kirjutage konsooli suvalisi arvutustehteid ja vaadake, mis juhtub!
 
 2+3 # liitmine
 12-8 # lahutamine
@@ -484,7 +482,7 @@ ee_sündmused1 <- ee_sündmused %>%
 ee_sündmused1
 
 
-### **Ajaliste komponentide eraldamine**
+### Ajaliste komponentide eraldamine
 
 # Praegune aasta  
 year(now()) 
