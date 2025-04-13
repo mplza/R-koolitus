@@ -1107,9 +1107,31 @@ inner_join(kontoritooted, hinnad, by = 'Tootekood')
 # full_join() 
 full_join(kontoritooted, hinnad, by = 'Tootekood')
 
-### Ülesanne 18
+#### Ülesanne 18
+
+**Kuidas viia table4a ja table4b pikale kujule?**
+
+```{r}
+# table4a
+table4a
+
+table4a_tidy <- table4a %>%
+  pivot_longer(c('1999', '2000'), names_to = 'year', values_to = 'cases')
+
+table4a_tidy
+
+# table4b
+table4b
+
+table4b_tidy <- table4b %>%
+  pivot_longer(c('1999', '2000'), names_to = 'year', values_to = 'population')
+
+table4b_tidy
+
+### Ülesanne 19
+
 # Kuidas ühendada omavahel andmestikud table4a_tidy ja table4b_tidy?
-  
+
 df <- left_join(table4a_tidy, table4b_tidy, by = c('...', '...'))
 df
 
