@@ -704,24 +704,31 @@ write.xlsx(andmestik1, 'andmestik1.xlsx', overwrite = TRUE)
 # Siin jätkame tööd andmestikuga `tellimused1`.
 # Kui alustate siin uut töösessiooni, siis jooksutage eelnevalt järgnev kood:
 
-# lae paketid
+# laadi paketid töölauale
 library(tidyverse)
 library(readxl)
 
-# laadi andmestik
-df <- read_excel("Superstore_clean.xlsx")
-tellimused <- df %>%
-  select(Order_ID, Order_Date, Ship_Date, Segment, Category, Sub_Category, Product_ID, Sales, Quantity, Profit, Discount) 
+# laadi andmestikud
+Superstore_clean <- read_excel("Superstore_clean.xlsx")
+gapminder <- read_excel("gapminder.xlsx")
 
-# loo tellimused1
-tellimused1 <- tellimused %>%
+# Loo uuesti tellimused 1 
+tellimused1 <- Superstore_clean %>%
+  select(Order_ID, Order_Date, Ship_Date, Segment, Category, Sub_Category, Product_ID, Sales, Quantity, Profit, Discount) %>%
   mutate(Tellimuse_kuupäev = date(Order_Date),
          Tarne_kuupäev = date(Ship_Date),
          Aasta = year(Order_Date),
          Kuu = month(Order_Date, label = TRUE)) %>%
   select(-c(Order_Date, Ship_Date))
 
-tellimused1
+# Loo uuesti gapminder_ee
+gapminder_ee <- gapminder %>%
+  rename(Riik = 'country',
+         Kontinent = 'continent',
+         Aasta = 'year',
+         Oodatav_eluiga = 'lifeExp',
+         Rahvaarv = 'pop',
+         SKP = 'gdpPercap') 
 
 # Kui eelneva töösessiooni ajalugu on töölaual olemas, siis jätkake siit:
 
